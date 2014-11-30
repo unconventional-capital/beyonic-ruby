@@ -1,0 +1,23 @@
+{
+  "id": 23,
+  "organization": 2,
+  "amount": "0.0000",
+  "currency": "UGX",
+  "payment_type": "money",
+  "metadata": null,
+  "description": "Test Payments",
+  "phone_nos": [],
+  "state": "processed_with_errors",
+  "last_error": "Error with payment 21. Error: (1062, \"Duplicate entry '6-2013-08-29 14:27:43-5000.0000' for key 'account_id_2'\") Type: IntegrityError",
+  "rejected_reason": null,
+  "rejected_by": null,
+  "rejected_time": null,
+  "cancelled_reason": null,
+  "cancelled_by": null,
+  "cancelled_time": null,
+  "created": "2013-08-29T14:27:42Z",
+  "author": 2,
+  "modified": "2013-09-29T23:26:02Z",
+  "updated_by": 1,
+  "start_date": "2013-08-29T00:00:00Z"
+}
