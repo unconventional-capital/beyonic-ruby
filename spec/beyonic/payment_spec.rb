@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BeyonicApi::Payment do
+describe Beyonic::Payment do
   describe ".crate" do
     let(:payload) {
       {
@@ -15,8 +15,8 @@ describe BeyonicApi::Payment do
     }
 
     subject {
-      BeyonicApi.api_key = "my-authorization-token"
-      BeyonicApi::Payment.create(payload)
+      Beyonic.api_key = "my-authorization-token"
+      Beyonic::Payment.create(payload)
     }
 
     context 'Success response' do
@@ -30,7 +30,7 @@ describe BeyonicApi::Payment do
             headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
           )
       }
-      it { is_expected.to be_an(BeyonicApi::Payment) }
+      it { is_expected.to be_an(Beyonic::Payment) }
 
       it { is_expected.to have_attributes(id: 3607, state: 'new') }
     end
@@ -45,12 +45,12 @@ describe BeyonicApi::Payment do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Payment.create(payload)
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Payment.create(payload)
         }
       }
       it { 
-        is_expected.to raise_error(BeyonicApi::AbstractApi::ApiError)
+        is_expected.to raise_error(Beyonic::AbstractApi::ApiError)
       }
     end
 
@@ -64,8 +64,8 @@ describe BeyonicApi::Payment do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Payment.create(payload)
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Payment.create(payload)
         }
       }
       it { 
@@ -77,8 +77,8 @@ describe BeyonicApi::Payment do
 
   describe ".list" do
     subject {
-      BeyonicApi.api_key = "my-authorization-token"
-      BeyonicApi::Payment.list
+      Beyonic.api_key = "my-authorization-token"
+      Beyonic::Payment.list
     }
 
     context 'Success response' do
@@ -94,7 +94,7 @@ describe BeyonicApi::Payment do
       }
       it { is_expected.to be_an(Array) }
 
-      it { is_expected.to all(be_an(BeyonicApi::Payment)) }
+      it { is_expected.to all(be_an(Beyonic::Payment)) }
     end
 
     context 'Unauthorized' do
@@ -107,8 +107,8 @@ describe BeyonicApi::Payment do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Payment.list
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Payment.list
         }
       }
       it { 
@@ -119,8 +119,8 @@ describe BeyonicApi::Payment do
 
   describe ".get" do
     subject {
-      BeyonicApi.api_key = "my-authorization-token"
-      BeyonicApi::Payment.get(23)
+      Beyonic.api_key = "my-authorization-token"
+      Beyonic::Payment.get(23)
     }
 
     context 'Success response' do
@@ -134,7 +134,7 @@ describe BeyonicApi::Payment do
             headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
           )
       }
-      it { is_expected.to be_an(BeyonicApi::Payment) }
+      it { is_expected.to be_an(Beyonic::Payment) }
 
       it { is_expected.to have_attributes(id: 23, state: 'processed_with_errors') }
     end
@@ -149,8 +149,8 @@ describe BeyonicApi::Payment do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Payment.get(23)
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Payment.get(23)
         }
       }
       it { 
@@ -168,8 +168,8 @@ describe BeyonicApi::Payment do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Payment.get(666)
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Payment.get(666)
         }
       }
       it { 

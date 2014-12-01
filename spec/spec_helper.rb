@@ -7,7 +7,7 @@ end
 require 'rubygems'
 require 'bundler/setup'
 
-require 'beyonic_api'
+require 'beyonic'
 require 'webmock/rspec'
 require 'rspec/collection_matchers'
 

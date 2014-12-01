@@ -1,7 +1,7 @@
 require 'ostruct'
-class BeyonicApi::Webhook < OpenStruct
+class Beyonic::Webhook < OpenStruct
 
-  extend BeyonicApi::AbstractApi
+  extend Beyonic::AbstractApi
   set_endpoint "https://staging.beyonic.com/api/webhooks"
   set_api_verion "v1"
 end

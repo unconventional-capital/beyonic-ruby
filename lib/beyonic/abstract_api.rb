@@ -1,4 +1,4 @@
-module BeyonicApi::AbstractApi
+module Beyonic::AbstractApi
   class ApiError < StandardError
   end
 
@@ -9,7 +9,7 @@ module BeyonicApi::AbstractApi
     @endpoint_url = url
   end
 
-  def set_api_verion(version)
+  def set_api_version(version)
     @api_version = version
   end
 
@@ -46,7 +46,7 @@ module BeyonicApi::AbstractApi
 
   def headers
     headers_hash = {}
-    headers_hash.merge!({"Authorization" => "Token #{BeyonicApi.api_key}"}) if BeyonicApi.api_key
+    headers_hash.merge!({"Authorization" => "Token #{Beyonic.api_key}"}) if Beyonic.api_key
     headers_hash.merge!({"Beyonic-Version" => @api_version}) if @api_version
     headers_hash
   end

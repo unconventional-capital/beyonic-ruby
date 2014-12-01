@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'beyonic_api/version'
+require 'beyonic/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "beyonic_api"
-  spec.version       = BeyonicApi::VERSION
+  spec.name          = "beyonic"
+  spec.version       = Beyonic::VERSION
   spec.authors       = ["Oleg German"]
   spec.email         = ["oleg.german@gmail.com"]
   spec.summary       = %q{Wrapper for beyonic.com api}

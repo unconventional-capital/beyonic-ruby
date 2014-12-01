@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BeyonicApi::Webhook do
+describe Beyonic::Webhook do
   describe ".crate" do
     let(:payload) {
       {
@@ -10,8 +10,8 @@ describe BeyonicApi::Webhook do
     }
 
     subject {
-      BeyonicApi.api_key = "my-authorization-token"
-      BeyonicApi::Webhook.create(payload)
+      Beyonic.api_key = "my-authorization-token"
+      Beyonic::Webhook.create(payload)
     }
 
     context 'Success response' do
@@ -25,7 +25,7 @@ describe BeyonicApi::Webhook do
             headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
           )
       }
-      it { is_expected.to be_an(BeyonicApi::Webhook) }
+      it { is_expected.to be_an(Beyonic::Webhook) }
 
       it { is_expected.to have_attributes(id: 2, user: 2) }
     end
@@ -40,12 +40,12 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Webhook.create(payload)
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Webhook.create(payload)
         }
       }
       it { 
-        is_expected.to raise_error(BeyonicApi::AbstractApi::ApiError)
+        is_expected.to raise_error(Beyonic::AbstractApi::ApiError)
       }
     end
 
@@ -59,8 +59,8 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Webhook.create(payload)
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Webhook.create(payload)
         }
       }
       it { 
@@ -72,8 +72,8 @@ describe BeyonicApi::Webhook do
 
   describe ".list" do
     subject {
-      BeyonicApi.api_key = "my-authorization-token"
-      BeyonicApi::Webhook.list
+      Beyonic.api_key = "my-authorization-token"
+      Beyonic::Webhook.list
     }
 
     context 'Success response' do
@@ -90,7 +90,7 @@ describe BeyonicApi::Webhook do
       it { is_expected.to be_an(Array) }
       it { is_expected.to have(2).items }
 
-      it { is_expected.to all(be_an(BeyonicApi::Webhook)) }
+      it { is_expected.to all(be_an(Beyonic::Webhook)) }
     end
 
     context 'Unauthorized' do
@@ -103,8 +103,8 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Webhook.list
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Webhook.list
         }
       }
       it { 
@@ -115,8 +115,8 @@ describe BeyonicApi::Webhook do
 
   describe ".get" do
     subject {
-      BeyonicApi.api_key = "my-authorization-token"
-      BeyonicApi::Webhook.get(2)
+      Beyonic.api_key = "my-authorization-token"
+      Beyonic::Webhook.get(2)
     }
 
     context 'Success response' do
@@ -130,7 +130,7 @@ describe BeyonicApi::Webhook do
             headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
           )
       }
-      it { is_expected.to be_an(BeyonicApi::Webhook) }
+      it { is_expected.to be_an(Beyonic::Webhook) }
 
       it { is_expected.to have_attributes(id: 2, user: 2) }
     end
@@ -145,8 +145,8 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Webhook.get(2)
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Webhook.get(2)
         }
       }
       it { 
@@ -164,8 +164,8 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Webhook.get(666)
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Webhook.get(666)
         }
       }
       it { 
@@ -183,8 +183,8 @@ describe BeyonicApi::Webhook do
     }
 
     subject {
-      BeyonicApi.api_key = "my-authorization-token"
-      BeyonicApi::Webhook.update(2, target: "https://my.callback2.url/")
+      Beyonic.api_key = "my-authorization-token"
+      Beyonic::Webhook.update(2, target: "https://my.callback2.url/")
     }
 
     context 'Success response' do
@@ -198,7 +198,7 @@ describe BeyonicApi::Webhook do
             headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
           )
       }
-      it { is_expected.to be_an(BeyonicApi::Webhook) }
+      it { is_expected.to be_an(Beyonic::Webhook) }
 
       it { is_expected.to have_attributes(id: 2, target: "https://my.callback2.url/") }
     end
@@ -214,12 +214,12 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Webhook.update(3, event: "wrongevent")
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Webhook.update(3, event: "wrongevent")
         }
       }
       it { 
-        is_expected.to raise_error(BeyonicApi::AbstractApi::ApiError)
+        is_expected.to raise_error(Beyonic::AbstractApi::ApiError)
       }
     end
 
@@ -234,8 +234,8 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Webhook.update(666, target: "https://my.callback2.url/")
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Webhook.update(666, target: "https://my.callback2.url/")
         }
       }
       it { 
@@ -253,8 +253,8 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token2"
-          BeyonicApi::Webhook.update(2, target: "https://my.callback2.url/")
+          Beyonic.api_key = "my-authorization-token2"
+          Beyonic::Webhook.update(2, target: "https://my.callback2.url/")
         }
       }
       it { 
@@ -267,8 +267,8 @@ describe BeyonicApi::Webhook do
   describe ".delete" do
 
     subject {
-      BeyonicApi.api_key = "my-authorization-token"
-      BeyonicApi::Webhook.delete(2)
+      Beyonic.api_key = "my-authorization-token"
+      Beyonic::Webhook.delete(2)
     }
 
     context 'Success response' do
@@ -296,8 +296,8 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token"
-          BeyonicApi::Webhook.delete(666)
+          Beyonic.api_key = "my-authorization-token"
+          Beyonic::Webhook.delete(666)
         }
       }
       it { 
@@ -315,8 +315,8 @@ describe BeyonicApi::Webhook do
 
       subject {
         -> {
-          BeyonicApi.api_key = "my-authorization-token2"
-          BeyonicApi::Webhook.delete(2)
+          Beyonic.api_key = "my-authorization-token2"
+          Beyonic::Webhook.delete(2)
         }
       }
       it { 

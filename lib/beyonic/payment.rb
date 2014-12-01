@@ -1,7 +1,7 @@
 require 'ostruct'
-class BeyonicApi::Payment < OpenStruct
+class Beyonic::Payment < OpenStruct
 
-  extend BeyonicApi::AbstractApi
+  extend Beyonic::AbstractApi
   set_endpoint "https://staging.beyonic.com/api/payments"
   set_api_verion "v1"
 end

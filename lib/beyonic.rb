@@ -1,9 +1,9 @@
-require "beyonic_api/version"
-require "beyonic_api/abstract_api"
-require "beyonic_api/payment"
-require "beyonic_api/webhook"
+require "beyonic/version"
+require "beyonic/abstract_api"
+require "beyonic/payment"
+require "beyonic/webhook"
 
-module BeyonicApi
+module Beyonic
 
   #Fixme!  remove me after getting new cert
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
