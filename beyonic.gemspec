@@ -6,11 +6,11 @@ require 'beyonic/version'
 Gem::Specification.new do |spec|
   spec.name          = "beyonic"
   spec.version       = Beyonic::VERSION
-  spec.authors       = ["Oleg German"]
-  spec.email         = ["oleg.german@gmail.com"]
-  spec.summary       = %q{Wrapper for beyonic.com api}
-  # spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.authors       = ['Oleg German', 'Luke Kyohere']
+  spec.email         = ['oleg.german@gmail.com', 'luke@beyonic.com']
+  spec.summary       = %q{Ruby library for the beyonic.com api}
+  spec.description   = %q{Beyonic.com makes enterprise payments to mobile easy. Details: http://beyonic.com}
+  spec.homepage      = "http://support.beyonic.com/api/"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
