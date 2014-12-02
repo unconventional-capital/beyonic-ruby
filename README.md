@@ -1,13 +1,18 @@
 # Beyonic
 
-Ruby API wrapper for http://beyonic.com
+Ruby gem for the http://beyonic.com API
 
 ## Installation
 
-Add this line to your application's Gemfile:
+If you just want to use the ruby library, you don't need to download the source code. Just run the following command:
+```ruby
+get install beyonic
+```
+
+For access via bundler, use:
 
 ```ruby
-gem 'beyonic_api', git: 'git@bitbucket.org:ogerman/beyonic_api.git'
+gem 'beyonic', :git => 'https://bitbucket.org/beyonic/beyonic-ruby.git'
 ```
 
 And then execute:
@@ -15,49 +20,5 @@ And then execute:
     $ bundle
 
 ## Usage
-To start using API you must setup your api key
 
-```ruby
-Beyonic.api_key = "my-authorization-token"
-```
-
-Now you can create payment
-
-```ruby
-Beyonic::Payment.create(
-    phonenumber: "+256773712831",
-    amount: "100.2",
-    currency: "UGX",
-    description: "Per diem payment",
-    payment_type: "money",
-    callback_url: "https://my.website/payments/callback",
-    metadata: "{'id': '1234', 'name': 'Lucy'}"
-)
-```
-
-After successeful creation you will get object Payment with id.
-
-Also you can list all your payments or get one by id
-
-```ruby
-Beyonic::Payment.list
-Beyonic::Payment.get(123)
-```
-
-Apart from everything else, you can manage Webohooks to define URLs on your server that notifications should be sent to.
-```ruby
-#Create
-Beyonic::Webhook.create(
-    event: "payment.status.changed",
-    target: "https://my.callback.url/"
-)
-
-#Update by id
-Beyonic::Webhook.update(2, 
-    target: "https://mynew.callback.url/")
-    
-#Delete by id
-Beyonic::Webhook.delete(2)
-```
-
-You can find more detailed API description here http://support.beyonic.com/category/api/
+Please visit http://support.beyonic.com/api for usage documentation
