@@ -1,4 +1,4 @@
-# Beyonic
+# Beyonic Ruby Library
 
 Ruby gem for the http://beyonic.com API
 
