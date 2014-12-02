@@ -363,4 +363,31 @@ describe Beyonic::Webhook do
     end
   end
 
+  describe "#id=" do
+    before { 
+      stub_request(:get, "https://staging.beyonic.com/api/webhooks/2").to_return(
+        body: File.new('spec/examples/webhooks/get_response.json'))
+    }
+
+    let(:loaded_webhook) { Beyonic::Webhook.get(2) }
+    
+    it { 
+      expect{
+       loaded_webhook.id=(4)
+      }.to raise_error "Can't change id of existing Beyonic::Webhook"
+    }
+
+    it {
+      expect {
+        loaded_webhook[:id]=(4)
+      }.to raise_error "Can't change id of existing Beyonic::Webhook"
+    }
+
+    it {
+      expect {
+        loaded_webhook[:target]="foo"
+      }.to_not raise_error
+    }
+  end
+
 end

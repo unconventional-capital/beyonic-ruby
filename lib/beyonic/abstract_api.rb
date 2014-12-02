@@ -57,12 +57,32 @@ module Beyonic::AbstractApi
         self.class.create(to_h)
       end
     end
+
+
+    def []=(name, value)
+      if name.to_sym == :id
+        self.id=(value)
+      else
+        super(name,value)
+      end
+    end
     
+  end
+
+  module Initializer
+    def initialize(*args)
+      super(*args)
+      #We should define it after Object initialization
+      define_singleton_method(:id=) do |val|
+        raise "Can't change id of existing #{self.class}"
+      end
+    end
   end
   
   def self.included(receiver)
-    receiver.extend         ClassMethods
+    receiver.extend ClassMethods
     receiver.send :include, InstanceMethods
+    receiver.send :prepend, Initializer
   end
 
 end
