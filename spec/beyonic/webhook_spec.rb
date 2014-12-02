@@ -324,4 +324,43 @@ describe Beyonic::Webhook do
       }
     end
   end
+
+  describe "#save" do
+    context 'new object' do
+      subject { Beyonic::Webhook }
+      let(:payload) {
+        {
+          event: "payment.status.changed",
+          target: "https://my.callback.url/"
+        }
+      } 
+
+      before {
+        allow(subject).to receive(:create)
+        subject.new(payload).save
+      }     
+
+      it { 
+        is_expected.to have_received(:create).with(payload)
+      }
+    end
+
+    context 'loaded object' do
+      subject { Beyonic::Webhook }
+      before { 
+        stub_request(:get, "https://staging.beyonic.com/api/webhooks/2").to_return(
+          body: File.new('spec/examples/webhooks/get_response.json'))
+        allow(subject).to receive(:update)
+
+        temp = subject.get(2)
+        temp.target = "https://google.com/"
+        temp.save
+      }
+
+      it { 
+        is_expected.to have_received(:update).with(2, hash_including(target: "https://google.com/"))
+      }
+    end
+  end
+
 end

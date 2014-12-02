@@ -177,4 +177,47 @@ describe Beyonic::Payment do
       }
     end
   end
+
+  describe "#save" do
+    context 'new object' do
+      subject { Beyonic::Payment }
+      let(:payload) {
+        {
+          phonenumber: "+256773712831",
+          amount: "100.2",
+          currency: "UGX",
+          description: "Per diem payment",
+          payment_type: "money",
+          callback_url: "https://my.website/payments/callback",
+          metadata: "{'id': '1234', 'name': 'Lucy'}"
+        }
+      } 
+
+      before {
+        allow(subject).to receive(:create)
+        subject.new(payload).save
+      }     
+
+      it { 
+        is_expected.to have_received(:create).with(payload)
+      }
+    end
+
+    context 'loaded object' do
+      subject { Beyonic::Payment }
+      before { 
+        stub_request(:get, "https://staging.beyonic.com/api/payments/23").to_return(
+          body: File.new('spec/examples/payments/get_response.json'))
+        allow(subject).to receive(:update)
+
+        temp = subject.get(23)
+        temp.description = "foo"
+        temp.save
+      }
+
+      it { 
+        is_expected.to have_received(:update).with(23, hash_including(description: "foo"))
+      }
+    end
+  end
 end
