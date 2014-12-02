@@ -4,9 +4,6 @@ module Beyonic::AbstractApi
 
   module ClassMethods
 
-    require "rest_client"
-    require "oj"
-
     def set_endpoint_resource(resource)
       @endpoint_url = Beyonic.endpoint_base + resource
     end

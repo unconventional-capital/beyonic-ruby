@@ -1,5 +1,8 @@
 module Beyonic
 
+  require "rest-client"
+  require "oj"
+
   #Fixme!  remove me after getting new cert
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
