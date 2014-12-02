@@ -7,12 +7,8 @@ module Beyonic::AbstractApi
     require "rest_client"
     require "oj"
 
-    def set_endpoint(url)
-      @endpoint_url = url
-    end
-
-    def set_api_version(version)
-      @api_version = version
+    def set_endpoint_resource(resource)
+      @endpoint_url = Beyonic.endpoint_base + resource
     end
 
     def create(payload = {})
@@ -49,7 +45,7 @@ module Beyonic::AbstractApi
     def headers
       headers_hash = {}
       headers_hash.merge!({"Authorization" => "Token #{Beyonic.api_key}"}) if Beyonic.api_key
-      headers_hash.merge!({"Beyonic-Version" => @api_version}) if @api_version
+      headers_hash.merge!({"Beyonic-Version" => Beyonic.api_version})
       headers_hash
     end
     
