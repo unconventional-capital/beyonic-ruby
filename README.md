@@ -7,16 +7,12 @@ Ruby API wrapper for http://beyonic.com
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'beyonic_api'
+gem 'beyonic_api', git: 'git@bitbucket.org:ogerman/beyonic_api.git'
 ```
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install beyonic_api
 
 ## Usage
 To start using API you must setup your api key
