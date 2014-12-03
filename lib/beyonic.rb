@@ -19,7 +19,7 @@ module Beyonic
   end
   
   def self.api_version
-     @apk_version
+    @apk_version
   end
 
   def self.endpoint_base
