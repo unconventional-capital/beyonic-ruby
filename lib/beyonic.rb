@@ -23,7 +23,7 @@ module Beyonic
   end
 
   def self.endpoint_base
-    "https://staging.beyonic.com/api/"
+    "https://app.beyonic.com/api/"
   end
 
 end
