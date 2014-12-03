@@ -3,8 +3,8 @@ module Beyonic
   require "rest-client"
   require "oj"
 
-  #Fixme!  remove me after getting new cert
-  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+  # Uncomment this if you are testing on your server and you want to bypass SSL checks.
+  # OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
   
   def self.api_key=(key)
     @api_key = key
