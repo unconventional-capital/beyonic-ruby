@@ -42,7 +42,7 @@ module Beyonic::AbstractApi
     def headers
       headers_hash = {}
       headers_hash.merge!({"Authorization" => "Token #{Beyonic.api_key}"}) if Beyonic.api_key
-      headers_hash.merge!({"Beyonic-Version" => Beyonic.api_version})
+      headers_hash.merge!({"Beyonic-Version" => Beyonic.api_version}) if Beyonic.api_version
       headers_hash
     end
     
