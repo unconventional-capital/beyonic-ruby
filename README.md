@@ -6,7 +6,7 @@ Ruby gem for the http://beyonic.com API
 
 If you just want to use the ruby library, you don't need to download the source code. Just run the following command:
 ```ruby
-get install beyonic
+gem install beyonic
 ```
 
 For access via bundler, use:
