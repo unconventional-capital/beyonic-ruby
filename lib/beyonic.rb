@@ -5,7 +5,7 @@ module Beyonic
 
   #Fixme!  remove me after getting new cert
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
-
+  
   def self.api_key=(key)
     @api_key = key
   end
@@ -14,8 +14,12 @@ module Beyonic
     @api_key
   end
 
+  def self.api_version=(version)
+    @apk_version = version
+  end
+  
   def self.api_version
-    "v1"
+     @apk_version
   end
 
   def self.endpoint_base
