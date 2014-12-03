@@ -12,7 +12,7 @@ gem install beyonic
 For access via bundler, use:
 
 ```ruby
-gem 'beyonic', :git => 'https://bitbucket.org/beyonic/beyonic-ruby.git'
+gem 'beyonic', :git => 'https://github.com/beyonic/beyonic-ruby.git'
 ```
 
 And then execute:
