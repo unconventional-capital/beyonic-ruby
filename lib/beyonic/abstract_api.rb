@@ -15,8 +15,13 @@ module Beyonic::AbstractApi
       raise ApiError.new(Oj.load(e.response.body))
     end
 
-    def list
-      resp = RestClient.get(@endpoint_url, headers)
+    def list(payload = {})
+      # Turn payload into query parameters
+      require "addressable/uri"
+      uri = Addressable::URI.new
+      uri.query_values = payload
+
+      resp = RestClient.get(@endpoint_url + '?' + uri.query, headers)
       Oj.load(resp).map { |obj_attrs| self.new(obj_attrs)}
     end
 
