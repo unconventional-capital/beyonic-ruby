@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://staging.beyonic.com/api/payments
+    body:
+      encoding: US-ASCII
+      string: phonenumber=%2B256773712831&amount=100.2&currency=UGX&description=Per%20diem%20payment&payment_type=money&callback_url=https%3A%2F%2Fmy.website%2Fpayments%2Fcallback&metadata=%7B'id'%3A%20'1234'%2C%20'name'%3A%20'Lucy'%7D
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token d349087313cc7a6627d77ab61163d4dab6449b4c
+      Beyonic-Version:
+      - v1
+      Content-Length:
+      - '221'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.6.2
+      Date:
+      - Wed, 08 Apr 2015 17:14:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Language:
+      - en-us
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Accept, Accept-Language, Cookie
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      X-Frame-Options:
+      - DENY
+    body:
+      encoding: UTF-8
+      string: '{"id": 211, "organization": 5, "amount": "100.2", "currency": "UGX",
+        "payment_type": "money", "metadata": {"id": "1234", "name": "Lucy"}, "description":
+        "Per diem payment", "phone_nos": ["+256773712831"], "state": "new", "last_error":
+        null, "rejected_reason": null, "rejected_by": null, "rejected_time": null,
+        "cancelled_reason": null, "cancelled_by": null, "cancelled_time": null, "created":
+        "2015-04-08T17:14:48.014Z", "author": 37, "modified": "2015-04-08T17:14:48.016Z",
+        "updated_by": null, "start_date": "2015-04-08T17:14:48.016Z"}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 17:14:48 GMT
+recorded_with: VCR 2.9.3

@@ -1,8 +1,0 @@
-{
-  "id": 2,
-  "created": "2014-11-30T19:10:31Z",
-  "updated": "2014-11-30T19:26:41.410Z",
-  "user": 2,
-  "event": "payment.status.changed",
-  "target": "https://my.callback2.url/"
-}

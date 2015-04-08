@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: patch
+    uri: https://staging.beyonic.com/api/webhooks/52
+    body:
+      encoding: US-ASCII
+      string: event=wrongevent
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token d349087313cc7a6627d77ab61163d4dab6449b4c
+      Beyonic-Version:
+      - v1
+      Content-Length:
+      - '16'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 400
+      message: BAD REQUEST
+    headers:
+      Server:
+      - nginx/1.6.2
+      Date:
+      - Wed, 08 Apr 2015 17:15:08 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Language:
+      - en-us
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Accept, Accept-Language, Cookie
+      Allow:
+      - GET, PUT, DELETE, HEAD, OPTIONS, PATCH
+      X-Frame-Options:
+      - DENY
+    body:
+      encoding: UTF-8
+      string: '{"event": ["Select a valid choice. wrongevent is not one of the available
+        choices."]}'
+    http_version: 
+  recorded_at: Wed, 08 Apr 2015 17:15:08 GMT
+recorded_with: VCR 2.9.3
