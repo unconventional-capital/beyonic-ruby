@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://staging.beyonic.com/api/collectionrequests
+    body:
+      encoding: US-ASCII
+      string: phonenumber=%2B256772781923&currency=UGX&amount=3000
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token d349087313cc7a6627d77ab61163d4dab6449b4c
+      Beyonic-Version:
+      - v1
+      Content-Length:
+      - '52'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Server:
+      - nginx/1.6.2
+      Date:
+      - Sat, 11 Apr 2015 22:06:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Language:
+      - en-us
+      X-Content-Type-Options:
+      - nosniff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Accept, Accept-Language, Cookie
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      X-Frame-Options:
+      - DENY
+    body:
+      encoding: UTF-8
+      string: '{"id": 3, "organization": 5, "amount": "3000", "currency": "UGX", "phonenumber":
+        "+256772781923", "created": "2015-04-11T22:06:21.684Z", "author": 37, "modified":
+        "2015-04-11T22:06:21.685Z", "updated_by": null}'
+    http_version: 
+  recorded_at: Sat, 11 Apr 2015 22:06:21 GMT
+recorded_with: VCR 2.9.3
