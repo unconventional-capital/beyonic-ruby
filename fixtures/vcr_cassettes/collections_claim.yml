@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://staging.beyonic.com/api/collections?amount=200&claim=true&phonenumber=%2B254727843600
+    uri: https://staging.beyonic.com/api/collections?amount=200&claim=true&phonenumber=%2B254727843600&remote_transaction_id
     body:
       encoding: US-ASCII
       string: ''
@@ -25,7 +25,7 @@ http_interactions:
       Server:
       - nginx/1.6.2
       Date:
-      - Fri, 10 Apr 2015 15:37:29 GMT
+      - Tue, 14 Apr 2015 23:48:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,11 +49,7 @@ http_interactions:
       - DENY
     body:
       encoding: UTF-8
-      string: '[{"id": 1, "remote_transaction_id": null, "organization": 5, "amount":
-        "100.0000", "currency": 2, "phonenumber": "+254727843600", "payment_date":
-        "2014-09-11T09:00:12Z", "reference": "xwd", "status": "successful", "created":
-        "2014-09-17T12:22:06Z", "author": null, "modified": "2014-09-17T12:22:07Z",
-        "updated_by": null}]'
+      string: "[]"
     http_version: 
-  recorded_at: Fri, 10 Apr 2015 15:37:29 GMT
+  recorded_at: Tue, 14 Apr 2015 23:48:22 GMT
 recorded_with: VCR 2.9.3
