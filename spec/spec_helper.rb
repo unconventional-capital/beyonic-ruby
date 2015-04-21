@@ -24,10 +24,16 @@ RSpec.configure do |config|
   config.mock_framework = :rspec
 
   config.raise_errors_for_deprecations!
+end
 
-  # Run specs in random order to surface order dependencies. If you find an
-  # order dependency and want to debug it, you can fix the order by providing
-  # the seed, which is printed after each run.
-  #     --seed 1234
-  config.order = 'random'
+require 'webmock/rspec'
+require 'vcr'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'fixtures/vcr_cassettes'
+  c.ignore_hosts '127.0.0.1', 'localhost'
+  c.hook_into :webmock
+  c.before_record do |i|
+    OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+  end
 end

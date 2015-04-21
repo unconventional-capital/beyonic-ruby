@@ -1,47 +1,47 @@
 require 'spec_helper'
 
 describe Beyonic::Webhook do
-  describe ".crate" do
-    let(:payload) {
-      {
-        event: "payment.status.changed",
-        target: "https://my.callback.url/"
-      }
-    }
+  before {
+    Beyonic.api_key = "d349087313cc7a6627d77ab61163d4dab6449b4c"
+    Beyonic.api_version = "v1"
+    Beyonic::Webhook.instance_variable_set(:@endpoint_url, "https://staging.beyonic.com/api/webhooks")
+  }
 
-    subject {
-      Beyonic.api_key = "my-authorization-token"
+  let(:payload) {
+    {
+      event: "payment.status.changed",
+      target: "https://my.callback.url/"
+    }
+  } 
+
+  let!(:create_webhook) {
+    VCR.use_cassette('webhooks_create') do
       Beyonic::Webhook.create(payload)
-    }
-
+    end
+  }
+  
+  describe ".crate" do
     context 'Success response' do
-      before { 
-        stub_request(:post, "https://staging.beyonic.com/api/webhooks").to_return(
-          body: File.new('spec/examples/webhooks/create_response.json'))
+      subject {
+        create_webhook
       }
 
       it { 
         is_expected.to have_requested(:post, "https://staging.beyonic.com/api/webhooks").with(
-            headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
+            headers: {"Authorization" => "Token d349087313cc7a6627d77ab61163d4dab6449b4c", "Beyonic-Version" => "v1"}
           )
       }
       it { is_expected.to be_an(Beyonic::Webhook) }
 
-      it { is_expected.to have_attributes(id: 2, user: 2) }
+      it { is_expected.to have_attributes(id: create_webhook.id, user: 37) }
     end
 
     context 'Bad request' do
-      before { 
-        stub_request(:post, "https://staging.beyonic.com/api/webhooks").to_return(
-          body: File.new('spec/examples/webhooks/create_invalid_response.json'), 
-          status: 400
-        )
-      }
-
       subject {
         -> {
-          Beyonic.api_key = "my-authorization-token"
-          Beyonic::Webhook.create(payload)
+          VCR.use_cassette('webhooks_invalid_create') do
+            Beyonic::Webhook.create(invalid_payload: true)
+          end
         }
       }
       it { 
@@ -50,17 +50,14 @@ describe Beyonic::Webhook do
     end
 
     context 'Unauthorized' do
-      before { 
-        stub_request(:post, "https://staging.beyonic.com/api/webhooks").to_return(
-          body: File.new('spec/examples/invalid_token_error.json'), 
-          status: 401
-        )
+      before {
+        Beyonic.api_key = "invalid_key"
       }
-
       subject {
         -> {
-          Beyonic.api_key = "my-authorization-token"
-          Beyonic::Webhook.create(payload)
+          VCR.use_cassette('webhooks_invalid_token_create') do
+            Beyonic::Webhook.create(payload)
+          end
         }
       }
       it { 
@@ -71,20 +68,16 @@ describe Beyonic::Webhook do
   end
 
   describe ".list" do
-    subject {
-      Beyonic.api_key = "my-authorization-token"
-      Beyonic::Webhook.list
-    }
-
     context 'Success response' do
-      before { 
-        stub_request(:get, "https://staging.beyonic.com/api/webhooks").to_return(
-          body: File.new('spec/examples/webhooks/list_response.json'))
+      subject {
+        VCR.use_cassette('webhooks_list') do
+          Beyonic::Webhook.list
+        end
       }
 
       it { 
         is_expected.to have_requested(:get, "https://staging.beyonic.com/api/webhooks").with(
-            headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
+            headers: {"Authorization" => "Token d349087313cc7a6627d77ab61163d4dab6449b4c", "Beyonic-Version" => "v1"}
           )
       }
       it { is_expected.to be_an(Array) }
@@ -94,17 +87,15 @@ describe Beyonic::Webhook do
     end
 
     context 'Unauthorized' do
-      before { 
-        stub_request(:get, "https://staging.beyonic.com/api/webhooks").to_return(
-          body: File.new('spec/examples/invalid_token_error.json'), 
-          status: 401
-        )
+      before {
+        Beyonic.api_key = "invalid_key"
       }
 
       subject {
         -> {
-          Beyonic.api_key = "my-authorization-token"
+        VCR.use_cassette('webhooks_invalid_token_list') do
           Beyonic::Webhook.list
+        end
         }
       }
       it { 
@@ -114,39 +105,33 @@ describe Beyonic::Webhook do
   end
 
   describe ".get" do
-    subject {
-      Beyonic.api_key = "my-authorization-token"
-      Beyonic::Webhook.get(2)
-    }
-
     context 'Success response' do
-      before { 
-        stub_request(:get, "https://staging.beyonic.com/api/webhooks/2").to_return(
-          body: File.new('spec/examples/webhooks/get_response.json'))
+      subject {
+        VCR.use_cassette('webhooks_get') do
+          Beyonic::Webhook.get(create_webhook.id)
+        end
       }
 
       it { 
-        is_expected.to have_requested(:get, "https://staging.beyonic.com/api/webhooks/2").with(
-            headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
+        is_expected.to have_requested(:get, "https://staging.beyonic.com/api/webhooks/#{create_webhook.id}").with(
+            headers: {"Authorization" => "Token d349087313cc7a6627d77ab61163d4dab6449b4c", "Beyonic-Version" => "v1"}
           )
       }
       it { is_expected.to be_an(Beyonic::Webhook) }
 
-      it { is_expected.to have_attributes(id: 2, user: 2) }
+      it { is_expected.to have_attributes(id: create_webhook.id, user: 37) }
     end
 
     context 'Unauthorized' do
-      before { 
-        stub_request(:get, "https://staging.beyonic.com/api/webhooks/23").to_return(
-          body: File.new('spec/examples/invalid_token_error.json'), 
-          status: 401
-        )
+      before {
+        Beyonic.api_key = "invalid_key"
       }
 
       subject {
         -> {
-          Beyonic.api_key = "my-authorization-token"
-          Beyonic::Webhook.get(2)
+          VCR.use_cassette('webhooks_invalid_token_get') do
+            Beyonic::Webhook.get(create_webhook.id)
+          end
         }
       }
       it { 
@@ -155,17 +140,11 @@ describe Beyonic::Webhook do
     end
 
     context 'Forbidden' do
-      before { 
-        stub_request(:get, "https://staging.beyonic.com/api/webhooks/666").to_return(
-          body: File.new('spec/examples/no_permissions_error.json'), 
-          status: 403
-        )
-      }
-
       subject {
         -> {
-          Beyonic.api_key = "my-authorization-token"
-          Beyonic::Webhook.get(666)
+          VCR.use_cassette('webhooks_no_permissions_get') do
+            Beyonic::Webhook.get(666)
+          end
         }
       }
       it { 
@@ -175,47 +154,29 @@ describe Beyonic::Webhook do
   end
 
   describe ".update" do
-    let(:payload) {
-      {
-        event: "payment.status.changed",
-        target: "https://my.callback2.url/"
-      }
-    }
-
-    subject {
-      Beyonic.api_key = "my-authorization-token"
-      Beyonic::Webhook.update(2, target: "https://my.callback2.url/")
-    }
-
     context 'Success response' do
-      before { 
-        stub_request(:patch, "https://staging.beyonic.com/api/webhooks/2").to_return(
-          body: File.new('spec/examples/webhooks/update_response.json'))
+      subject {
+        VCR.use_cassette('webhooks_update') do
+          Beyonic::Webhook.update(create_webhook.id, target: "https://my.callback2.url/")
+        end
       }
 
       it { 
-        is_expected.to have_requested(:patch, "https://staging.beyonic.com/api/webhooks/2").with(
-            headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
+        is_expected.to have_requested(:patch, "https://staging.beyonic.com/api/webhooks/#{create_webhook.id}").with(
+            headers: {"Authorization" => "Token d349087313cc7a6627d77ab61163d4dab6449b4c", "Beyonic-Version" => "v1"}
           )
       }
       it { is_expected.to be_an(Beyonic::Webhook) }
 
-      it { is_expected.to have_attributes(id: 2, target: "https://my.callback2.url/") }
+      it { is_expected.to have_attributes(id: create_webhook.id, target: "https://my.callback2.url/") }
     end
 
-
     context 'Bad request' do
-      before { 
-        stub_request(:patch, "https://staging.beyonic.com/api/webhooks/3").to_return(
-          body: File.new('spec/examples/webhooks/create_invalid_response.json'), 
-          status: 400
-        )
-      }
-
       subject {
         -> {
-          Beyonic.api_key = "my-authorization-token"
-          Beyonic::Webhook.update(3, event: "wrongevent")
+          VCR.use_cassette('webhooks_invalid_update') do
+            Beyonic::Webhook.update(create_webhook.id, event: "wrongevent")
+          end
         }
       }
       it { 
@@ -223,100 +184,31 @@ describe Beyonic::Webhook do
       }
     end
 
-
     context 'Forbidden' do
-      before { 
-        stub_request(:patch, "https://staging.beyonic.com/api/webhooks/666").to_return(
-          body: File.new('spec/examples/no_permissions_error.json'), 
-          status: 403
-        )
-      }
-
       subject {
         -> {
-          Beyonic.api_key = "my-authorization-token"
-          Beyonic::Webhook.update(666, target: "https://my.callback2.url/")
+          VCR.use_cassette('webhooks_no_permissions_update') do
+            Beyonic::Webhook.update(666, target: "https://my.callback2.url/")
+          end
         }
       }
+
       it { 
         is_expected.to raise_error
       }
     end
 
     context 'Unauthorized' do
-      before { 
-        stub_request(:patch, "https://staging.beyonic.com/api/webhooks/23").to_return(
-          body: File.new('spec/examples/invalid_token_error.json'), 
-          status: 401
-        )
+      before {
+        Beyonic.api_key = "invalid_key"
+        create_webhook
       }
 
       subject {
         -> {
-          Beyonic.api_key = "my-authorization-token2"
-          Beyonic::Webhook.update(2, target: "https://my.callback2.url/")
-        }
-      }
-      it { 
-        is_expected.to raise_error
-      }
-    end
-  end
-
-
-  describe ".delete" do
-
-    subject {
-      Beyonic.api_key = "my-authorization-token"
-      Beyonic::Webhook.delete(2)
-    }
-
-    context 'Success response' do
-      before { 
-        stub_request(:delete, "https://staging.beyonic.com/api/webhooks/2").to_return(
-          status: 204)
-      }
-
-      it { 
-        is_expected.to have_requested(:delete, "https://staging.beyonic.com/api/webhooks/2").with(
-            headers: {"Authorization" => "Token my-authorization-token", "Beyonic-Version" => "v1"}
-          )
-      }
-      it { is_expected.to be_truthy }
-
-    end
-
-    context 'Forbidden' do
-      before { 
-        stub_request(:delete, "https://staging.beyonic.com/api/webhooks/666").to_return(
-          body: File.new('spec/examples/no_permissions_error.json'), 
-          status: 403
-        )
-      }
-
-      subject {
-        -> {
-          Beyonic.api_key = "my-authorization-token"
-          Beyonic::Webhook.delete(666)
-        }
-      }
-      it { 
-        is_expected.to raise_error
-      }
-    end
-
-    context 'Unauthorized' do
-      before { 
-        stub_request(:delete, "https://staging.beyonic.com/api/webhooks/23").to_return(
-          body: File.new('spec/examples/invalid_token_error.json'), 
-          status: 401
-        )
-      }
-
-      subject {
-        -> {
-          Beyonic.api_key = "my-authorization-token2"
-          Beyonic::Webhook.delete(2)
+          VCR.use_cassette('webhooks_invalid_token_update') do
+            Beyonic::Webhook.update(create_webhook.id, target: "https://my.callback2.url/")
+          end
         }
       }
       it { 
@@ -328,12 +220,6 @@ describe Beyonic::Webhook do
   describe "#save" do
     context 'new object' do
       subject { Beyonic::Webhook }
-      let(:payload) {
-        {
-          event: "payment.status.changed",
-          target: "https://my.callback.url/"
-        }
-      } 
 
       before {
         allow(subject).to receive(:create)
@@ -346,48 +232,87 @@ describe Beyonic::Webhook do
     end
 
     context 'loaded object' do
-      subject { Beyonic::Webhook }
-      before { 
-        stub_request(:get, "https://staging.beyonic.com/api/webhooks/2").to_return(
-          body: File.new('spec/examples/webhooks/get_response.json'))
-        allow(subject).to receive(:update)
+      subject { 
+        Beyonic::Webhook
+      }
 
-        temp = subject.get(2)
-        temp.target = "https://google.com/"
-        temp.save
+      before {
+        allow(subject).to receive(:update)
+        create_webhook.target = "https://google.com/"
+        create_webhook.save
       }
 
       it { 
-        is_expected.to have_received(:update).with(2, hash_including(target: "https://google.com/"))
+        is_expected.to have_received(:update).with(create_webhook.id, hash_including(target: "https://google.com/"))
       }
     end
   end
 
   describe "#id=" do
-    before { 
-      stub_request(:get, "https://staging.beyonic.com/api/webhooks/2").to_return(
-        body: File.new('spec/examples/webhooks/get_response.json'))
-    }
-
-    let(:loaded_webhook) { Beyonic::Webhook.get(2) }
-    
     it { 
       expect{
-       loaded_webhook.id=(4)
+        create_webhook.id=(4)
       }.to raise_error "Can't change id of existing Beyonic::Webhook"
     }
 
     it {
       expect {
-        loaded_webhook[:id]=(4)
+        create_webhook[:id]=(4)
       }.to raise_error "Can't change id of existing Beyonic::Webhook"
     }
 
     it {
       expect {
-        loaded_webhook[:target]="foo"
+        create_webhook[:target]="foo"
       }.to_not raise_error
     }
   end
 
+  describe ".delete" do
+    context 'Success response' do
+      subject {
+        VCR.use_cassette('webhooks_delete') do
+          Beyonic::Webhook.delete(create_webhook.id)
+        end
+      }
+
+      it { 
+        is_expected.to have_requested(:delete, "https://staging.beyonic.com/api/webhooks/#{create_webhook.id}").with(
+            headers: {"Authorization" => "Token d349087313cc7a6627d77ab61163d4dab6449b4c", "Beyonic-Version" => "v1"}
+          )
+      }
+      it { is_expected.to be_truthy }
+
+    end
+
+    context 'Forbidden' do
+      subject {
+        -> {
+          VCR.use_cassette('webhooks_no_permissions_delete') do
+            Beyonic::Webhook.delete(666)
+          end
+        }
+      }
+      it { 
+        is_expected.to raise_error
+      }
+    end
+
+    context 'Unauthorized' do
+      before {
+        Beyonic.api_key = "invalid_key"
+      }
+
+      subject {
+        -> {
+          VCR.use_cassette('webhooks_invalid_token_delete') do
+            Beyonic::Webhook.delete(create_webhook.id)
+          end
+        }
+      }
+      it { 
+        is_expected.to raise_error
+      }
+    end
+  end
 end
