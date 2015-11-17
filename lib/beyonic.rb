@@ -15,11 +15,11 @@ module Beyonic
   end
 
   def self.api_version=(version)
-    @apk_version = version
+    @api_version = version
   end
   
   def self.api_version
-    @apk_version
+    @api_version
   end
 
   def self.endpoint_base

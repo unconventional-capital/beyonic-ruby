@@ -22,7 +22,9 @@ module Beyonic::AbstractApi
       uri.query_values = payload
 
       resp = RestClient.get(@endpoint_url + '?' + uri.query, headers)
-      Oj.load(resp).map { |obj_attrs| self.new(obj_attrs)}
+      ret = self.new(Oj.load(resp))
+      ret.results = ret.results.map { |obj_attrs| self.new(obj_attrs)}
+      return ret
     end
 
     def get(id)
@@ -48,6 +50,8 @@ module Beyonic::AbstractApi
       headers_hash = {}
       headers_hash.merge!({"Authorization" => "Token #{Beyonic.api_key}"}) if Beyonic.api_key
       headers_hash.merge!({"Beyonic-Version" => Beyonic.api_version}) if Beyonic.api_version
+      headers_hash.merge!({"Beyonic-Client" => "Ruby"})
+      headers_hash.merge!({"Beyonic-Client-Version" => Beyonic::VERSION})
       headers_hash
     end
     
