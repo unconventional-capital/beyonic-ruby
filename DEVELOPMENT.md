@@ -44,3 +44,10 @@ For mocks [VCR](https://github.com/vcr/vcr) is used.
 All recorded API interactions cassettes located on fixtures/vcr_cassettes/ folder.
 
 They can be deleted, in this case on next tests run specs will access to real API and cassettes will be recorded again.
+
+## Releasing
+To release a new version of the gem:
+- Increment the version in lib/beyonic/version.rb
+- Push all code
+- Build the gem with ```gem build beyonic.gemspec```
+- Push the gem to rubygems with ```gem push beyonic-X.X.X.gem```
