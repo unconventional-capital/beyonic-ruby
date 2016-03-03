@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://staging.beyonic.com/api/accounts
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Token d349087313cc7a6627d77ab61163d4dab6449b4c
+      Beyonic-Version:
+      - v1
+      Beyonic-Client:
+      - Ruby
+      Beyonic-Client-Version:
+      - 0.1.9
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 Feb 2016 09:21:12 GMT
+      Server:
+      - WSGIServer/0.1 Python/2.7.6
+      Vary:
+      - Accept, Accept-Language, Cookie
+      X-Frame-Options:
+      - SAMEORIGIN
+      Content-Type:
+      - application/json;q=0.5
+      Content-Language:
+      - en
+      Allow:
+      - GET, HEAD, OPTIONS
+    body:
+      encoding: UTF-8
+      string: '[{"id":1,"organization":2,"balance":0,"currency":"KES","status":"inactive","created":"2016-01-24T19:30:40Z","author":7,"modified":"2016-01-26T06:02:17Z","updated_by":7},{"id":3,"organization":2,"balance":0,"currency":"UGX","status":"inactive","created":"2016-01-24T21:07:05Z","author":7,"modified":"2016-01-26T16:21:53Z","updated_by":7}]'
+    http_version:
+  recorded_at: Thu, 11 Feb 2016 09:21:12 GMT
+recorded_with: VCR 3.0.1
