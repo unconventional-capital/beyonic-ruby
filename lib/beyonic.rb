@@ -23,7 +23,7 @@ module Beyonic
   end
 
   def self.endpoint_base
-    "https://app.beyonic.com/api/"
+    "https://staging.beyonic.com/api/"
   end
 
 end
@@ -35,3 +35,4 @@ require "beyonic/webhook"
 require "beyonic/collection"
 require "beyonic/collection_request"
 require "beyonic/account"
+require "beyonic/contact"
