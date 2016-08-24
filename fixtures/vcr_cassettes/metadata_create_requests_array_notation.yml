@@ -1,0 +1,73 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://staging.beyonic.com/api/collectionrequests
+    body:
+      encoding: US-ASCII
+      string: phonenumber=%2B40715441309&currency=BXC&amount=3000&metadata.my_id=123ASDAsd123
+    headers:
+      Accept:
+      - "*/*"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - rest-client/2.0.0 (darwin14.1.0 x86_64) ruby/2.2.1p85
+      Authorization:
+      - Token c4269a8029e8a7c5659d3cb7829ce1d7319b4689
+      Beyonic-Version:
+      - v1
+      Beyonic-Client:
+      - Ruby
+      Beyonic-Client-Version:
+      - 0.0.11
+      Content-Length:
+      - '79'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Host:
+      - localhost:7000
+  response:
+    status:
+      code: 201
+      message: CREATED
+    headers:
+      Date:
+      - Wed, 24 Aug 2016 12:42:12 GMT
+      Server:
+      - WSGIServer/0.1 Python/2.7.10
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      Content-Security-Policy:
+      - 'script-src ''self'' *.googleapis.com *.bootstrapcdn.com *.cloudflare.com
+        *.jsdelivr.net beyonic.atlassian.net ''unsafe-inline'' ''unsafe-eval'' *.google-analytics.com
+        *.newrelic.com bam.nr-data.net; img-src ''self'' *.bootstrapcdn.com *.cloudflare.com
+        secure.gravatar.com data: blob: *.openstreetmap.org *.google-analytics.com;
+        default-src ''self''; frame-src ''self'' beyonic.atlassian.net; style-src
+        ''self'' *.googleapis.com *.bootstrapcdn.com *.cloudflare.com ''unsafe-inline''
+        cdn.jsdelivr.net; media-src ''self''; connect-src ''self''; font-src ''self''
+        *.bootstrapcdn.com data:; report-uri /reports/csp-report/'
+      Expires:
+      - Wed, 24 Aug 2016 12:42:12 GMT
+      Vary:
+      - Accept-Language, Cookie
+      Content-Language:
+      - en
+      Last-Modified:
+      - Wed, 24 Aug 2016 12:42:12 GMT
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Cache-Control:
+      - no-cache, no-store, must-revalidate, max-age=0
+      X-Frame-Options:
+      - SAMEORIGIN
+      Content-Type:
+      - application/json
+    body:
+      encoding: UTF-8
+      string: '{"id":59,"organization":"Zeptohub","amount":"3000.0000","currency":"BXC","phonenumber":"+40715441309","reason":"","metadata":{"my_id":"123ASDAsd123"},"created":"2016-08-24T12:42:12.204506Z","author":1,"modified":"2016-08-24T12:42:12.204545Z","updated_by":1,"collection":null,"success_message":"","instructions":null,"send_instructions":false}'
+    http_version:
+  recorded_at: Wed, 24 Aug 2016 12:42:12 GMT
+recorded_with: VCR 3.0.3
