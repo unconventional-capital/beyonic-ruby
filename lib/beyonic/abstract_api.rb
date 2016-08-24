@@ -9,6 +9,13 @@ module Beyonic::AbstractApi
     end
 
     def create(payload = {})
+      # transform metadata from hash notation to dot notation
+      if (payload.has_key?:metadata) &&  (!payload[:metadata].empty?)
+        payload[:metadata].each do |key, value|
+          payload["metadata.#{key}"] = value
+        end
+        payload.delete:metadata
+      end
       resp = RestClient.post(@endpoint_url, payload, headers)
       self.new(Oj.load(resp))
     rescue RestClient::BadRequest => e
@@ -54,9 +61,9 @@ module Beyonic::AbstractApi
       headers_hash.merge!({"Beyonic-Client-Version" => Beyonic::VERSION})
       headers_hash
     end
-    
+
   end
-  
+
   module InstanceMethods
 
     def save
@@ -75,7 +82,7 @@ module Beyonic::AbstractApi
         super(name,value)
       end
     end
-    
+
   end
 
   module Initializer
@@ -87,7 +94,7 @@ module Beyonic::AbstractApi
       end
     end
   end
-  
+
   def self.included(receiver)
     receiver.extend ClassMethods
     receiver.send :include, InstanceMethods
