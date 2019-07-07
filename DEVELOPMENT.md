@@ -54,4 +54,8 @@ To release a new version of the gem:
 
 ## Changelog
 
-0.0.14 - Added Network and Currency APIs and the ability to set the Duplicate-Check-Key for each create() and update() request.
+0.0.14 
+- Added Network and Currency APIs and the ability to set the Duplicate-Check-Key for each create() and update() request.
+
+0.0.15 
+- Fixed bugs in 0.0.14 that were preventing Network and Currency APIs from working
