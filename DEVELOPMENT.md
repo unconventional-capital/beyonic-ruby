@@ -51,3 +51,7 @@ To release a new version of the gem:
 - Push all code
 - Build the gem with ```gem build beyonic.gemspec```
 - Push the gem to rubygems with ```gem push beyonic-X.X.X.gem```
+
+## Changelog
+
+0.0.14 - Added Network and Currency APIs and the ability to set the Duplicate-Check-Key for each create() and update() request.
