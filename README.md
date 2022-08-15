@@ -21,6 +21,6 @@ And then execute:
 
 ## Usage
 
-Please visit http://support.beyonic.com/api for usage documentation
+Please visit https://developer.mfsafrica.com/docs for usage documentation
 
 [![Gem Version](https://badge.fury.io/rb/beyonic.svg)](http://badge.fury.io/rb/beyonic)
